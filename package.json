@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/nitsanavni/search/issues"
   },
-  "homepage": "https://github.com/nitsanavni/search#readme"
+  "homepage": "https://github.com/nitsanavni/search#readme",
+  "dependencies": {
+    "typescript": "^3.5.1"
+  },
+  "devDependencies": {
+    "jasmine": "^3.4.0"
+  }
 }
