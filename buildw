@@ -1,0 +1,1 @@
+npm-run tsc -w | grep "error TS" --line-buffered | pv -i 1 -q | xargs -I{} zsh -c 'echo "{}"; ./revert'
