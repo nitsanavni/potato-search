@@ -1,0 +1,2 @@
+echo "reverting"
+git reset --hard
