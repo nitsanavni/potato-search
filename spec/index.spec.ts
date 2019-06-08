@@ -11,18 +11,17 @@ describe("Search", () => {
     // TODO - results in markdown
     _.each(
         [
-            ["hell", "hello", 3, [[0, 4]], "*hell*o"],
-            ["world", "hello world", 2, [[6, 11]], "hello *world*"]
-            // ["ell", "hello", 1],
-            // ["help", "hello", 0],
-            // ["Hell", "hello", 0],
-            // ["hell", "Hello", 3]
+            ["hell", "hello", 3, "*hell*o"],
+            ["world", "hello world", 2, "hello *world*"],
+            ["ell", "hello", 1, "h*ell*o"],
+            ["help", "hello", 0, "hello"],
+            ["Hell", "hello", 0, "hello"],
+            ["hell", "Hello", 3, "*Hell*o"]
         ],
-        ([searchTerm, str, expectedScore, spans, marked]: [string, string, number, Span[], string]) =>
+        ([searchTerm, str, expectedScore, marked]: [string, string, number, string]) =>
             it(`should search(${searchTerm}, ${str}) = ${expectedScore}, ${marked}`, () => {
                 const res = search.term(searchTerm).in(str);
                 expect(res.score).toBe(expectedScore);
-                expect(res.spans).toEqual(spans);
                 expect(res.marked).toEqual(marked);
             })
     );
@@ -38,6 +37,7 @@ describe("Search", () => {
             p = span[1];
         });
         ret = ret + str.substring(p);
+
         return ret;
     }
 

@@ -1,31 +1,32 @@
 {
-  "name": "search",
-  "version": "0.0.1",
-  "description": "",
-  "main": "built/index.js",
-  "scripts": {
-    "test": "jasmine"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nitsanavni/search.git"
-  },
-  "keywords": [
-    "search"
-  ],
-  "author": "Nitsan Avni",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nitsanavni/search/issues"
-  },
-  "homepage": "https://github.com/nitsanavni/search#readme",
-  "dependencies": {
-    "@types/lodash": "^4.14.134",
-    "lodash": "^4.17.11",
-    "typescript": "^3.5.1"
-  },
-  "devDependencies": {
-    "@types/jasmine": "^3.3.13",
-    "jasmine": "^3.4.0"
-  }
+    "name": "search",
+    "version": "0.0.1",
+    "description": "",
+    "main": "built/src/index.js",
+    "types": "built/src/index.d.ts",
+    "scripts": {
+        "test": "jasmine"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nitsanavni/search.git"
+    },
+    "keywords": [
+        "search"
+    ],
+    "author": "Nitsan Avni",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/nitsanavni/search/issues"
+    },
+    "homepage": "https://github.com/nitsanavni/search#readme",
+    "dependencies": {
+        "@types/lodash": "^4.14.134",
+        "lodash": "^4.17.11",
+        "typescript": "^3.5.1"
+    },
+    "devDependencies": {
+        "@types/jasmine": "^3.3.13",
+        "jasmine": "^3.4.0"
+    }
 }
