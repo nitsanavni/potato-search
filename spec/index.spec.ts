@@ -19,7 +19,9 @@ describe("score", () => {
             ["hell", "Hello", 3]
         ],
         ([searchTerm, str, expectedScore]: [string, string, number]) =>
-            it(`should score(${searchTerm}, ${str}) = ${expectedScore}`, () =>
-                expect(search.in(searchTerm, str).score).toBe(expectedScore))
+            it(`should score(${searchTerm}, ${str}) = ${expectedScore}`, () => {
+                const res = search.in(searchTerm, str);
+                expect(res.score).toBe(expectedScore);
+            })
     );
 });
