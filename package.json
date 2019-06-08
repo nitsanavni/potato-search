@@ -1,0 +1,22 @@
+{
+  "name": "search",
+  "version": "0.0.1",
+  "description": "",
+  "main": "built/index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitsanavni/search.git"
+  },
+  "keywords": [
+    "search"
+  ],
+  "author": "Nitsan Avni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nitsanavni/search/issues"
+  },
+  "homepage": "https://github.com/nitsanavni/search#readme"
+}
