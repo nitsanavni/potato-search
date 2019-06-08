@@ -23,6 +23,7 @@
     "typescript": "^3.5.1"
   },
   "devDependencies": {
+    "@types/jasmine": "^3.3.13",
     "jasmine": "^3.4.0"
   }
 }
