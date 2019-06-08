@@ -6,7 +6,7 @@ export interface Config {
     allowErrors?: number | boolean;
     matchProportionBonus?: number | boolean;
     smartCase?: number | boolean;
-    allowWordsOutOfOrder: number | boolean;
+    allowWordsOutOfOrder?: number | boolean;
     markBefore?: string;
     markAfter?: string;
 }
@@ -53,7 +53,7 @@ export class Search {
 
     public term(searchTerm: string): Search {
         this.searchTerm = searchTerm;
-        this.sensitive = /[^a-l .@\-]/.test(searchTerm);
+        this.sensitive = /[^a-z .@\-]/.test(searchTerm);
 
         return this;
     }
