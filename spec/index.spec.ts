@@ -23,6 +23,7 @@ describe("score", () => {
                 const res = search.in(searchTerm, str);
                 expect(res.score).toBe(expectedScore);
                 expect(res.spans).toEqual(spans);
+                expect(res.marked).toEqual(str);
             })
     );
 });
