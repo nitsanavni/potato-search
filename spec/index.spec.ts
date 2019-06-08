@@ -20,7 +20,7 @@ describe("Search", () => {
         ],
         ([searchTerm, str, expectedScore, spans, marked]: [string, string, number, Span[], string]) =>
             it(`should search(${searchTerm}, ${str}) = ${expectedScore}, ${marked}`, () => {
-                const res = search.in(searchTerm, str);
+                const res = search.term(searchTerm).in(str);
                 expect(res.score).toBe(expectedScore);
                 expect(res.spans).toEqual(spans);
                 expect(res.marked).toEqual(marked);

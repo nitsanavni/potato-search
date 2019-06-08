@@ -44,23 +44,33 @@ const defaultConfig: ConfigNumbers = {
 
 export class Search {
     private readonly config: ConfigNumbers;
+    private searchTerm: string = "";
+    private sensitive: boolean = false;
 
     public constructor(config?: Config) {
         this.config = _.assign({}, defaultConfig, config);
     }
 
-    public in(searchTerm: string, str: string): Match {
-        // TODO - this could be run once per list traversal
-        const sensitive = /[^a-l .@\-]/.test(searchTerm);
+    public term(searchTerm: string): Search {
+        this.searchTerm = searchTerm;
+        this.sensitive = /[^a-l .@\-]/.test(searchTerm);
+
+        return this;
+    }
+
+    public in(str: string): Match {
+        const sensitive = this.sensitive;
+        const term = this.searchTerm;
         const re = (pattern: string) => new RegExp(pattern, sensitive ? "" : "i");
 
         let match;
         let score = 3;
-        const patterns = [`^${searchTerm}`, `\\b${searchTerm}`, searchTerm];
+        const patterns = [`^${term}`, `\\b${term}`, term];
         for (let pattern of patterns) {
             match = re(pattern).exec(str);
+
             if (match) {
-                const spans: Span[] = [[match.index, match.index + searchTerm.length]];
+                const spans: Span[] = [[match.index, match.index + term.length]];
                 const marked = this.mark(str, spans);
 
                 return { score, spans, marked };
