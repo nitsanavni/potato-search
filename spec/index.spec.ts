@@ -11,18 +11,18 @@ describe("score", () => {
     // TODO - results in markdown
     _.each(
         [
-            ["hell", "hello", 3, []]
+            ["hell", "hello", 3, [[0, 4]]]
             // ["world", "hello world", 2],
             // ["ell", "hello", 1],
             // ["help", "hello", 0],
             // ["Hell", "hello", 0],
             // ["hell", "Hello", 3]
         ],
-        ([searchTerm, str, expectedScore]: [string, string, number, Span[]]) =>
+        ([searchTerm, str, expectedScore, spans]: [string, string, number, Span[]]) =>
             it(`should score(${searchTerm}, ${str}) = ${expectedScore}`, () => {
                 const res = search.in(searchTerm, str);
                 expect(res.score).toBe(expectedScore);
-                expect(res.spans).toEqual([[0, 4]]);
+                expect(res.spans).toEqual(spans);
             })
     );
 });
