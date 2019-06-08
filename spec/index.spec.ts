@@ -1,12 +1,23 @@
-import { Score } from "../src";
+import * as _ from "lodash";
 
-describe("hello world", () => {
-    let score: Score;
+import { Search } from "../src";
 
-    beforeEach(() => (score = new Score()));
+describe("score", () => {
+    let search: Search;
 
-    it("should score", () => {
-        expect(score.get("hell", "hello")).toBe(1);
-        expect(score.get("help", "hello")).toBe(0);
-    });
+    beforeEach(() => (search = new Search()));
+
+    _.each(
+        [
+            ["hell", "hello", 3],
+            ["world", "hello world", 2],
+            ["ell", "hello", 1],
+            ["help", "hello", 0],
+            ["Hell", "hello", 0],
+            ["hell", "Hello", 3]
+        ],
+        ([searchTerm, str, expectedScore]: [string, string, number]) =>
+            it(`should score(${searchTerm}, ${str}) = ${expectedScore}`, () =>
+                expect(search.in(searchTerm, str)).toBe(expectedScore))
+    );
 });
