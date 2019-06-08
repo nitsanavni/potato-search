@@ -22,6 +22,7 @@ describe("score", () => {
             it(`should score(${searchTerm}, ${str}) = ${expectedScore}`, () => {
                 const res = search.in(searchTerm, str);
                 expect(res.score).toBe(expectedScore);
+                expect(res.spans).toEqual([[0, 4]]);
             })
     );
 });
