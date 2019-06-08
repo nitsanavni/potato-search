@@ -18,6 +18,6 @@ describe("score", () => {
         ],
         ([searchTerm, str, expectedScore]: [string, string, number]) =>
             it(`should score(${searchTerm}, ${str}) = ${expectedScore}`, () =>
-                expect(search.in(searchTerm, str)).toBe(expectedScore))
+                expect(search.in(searchTerm, str).score).toBe(expectedScore))
     );
 });

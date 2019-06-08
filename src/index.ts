@@ -41,7 +41,7 @@ export class Search {
         this.config = _.assign({}, defaultConfig, config);
     }
 
-    public in(searchTerm: string, str: string): number {
+    public in(searchTerm: string, str: string): Match {
         let score = 0;
 
         const sensitive = /[^a-l .@\-]/.test(searchTerm);
@@ -51,6 +51,6 @@ export class Search {
         score += re(`^${searchTerm}`).test(str) ? this.config.startOfStringBonus : 0;
         score += re(`\\b${searchTerm}`).test(str) ? this.config.startOfWordBonus : 0;
 
-        return score;
+        return { score, spans: [] };
     }
 }
