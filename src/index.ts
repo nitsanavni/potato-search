@@ -50,9 +50,11 @@ export class Search {
         const startOfStringMatch = re(`^${searchTerm}`).exec(str);
 
         if (startOfStringMatch) {
+            const spans: Span[] = [[startOfStringMatch.index, startOfStringMatch.index + searchTerm.length]];
+
             return {
                 score: 3,
-                spans: [[startOfStringMatch.index, startOfStringMatch.index + searchTerm.length]]
+                spans
             };
         }
         score += re(`\\b${searchTerm}`).test(str) ? this.config.startOfWordBonus : 0;
