@@ -7,6 +7,8 @@ describe("score", () => {
 
     beforeEach(() => (search = new Search()));
 
+    // TODO - non-English
+    // TODO - results in markdown
     _.each(
         [
             ["hell", "hello", 3],
