@@ -24,6 +24,7 @@ export interface Match {
 }
 
 interface ConfigNumbers {
+    // TODO - whole word bonus
     startOfStringBonus: number;
     startOfWordBonus: number;
     allowErrors: number;
@@ -49,26 +50,40 @@ export class Search {
     }
 
     public in(searchTerm: string, str: string): Match {
-        let score = 0;
-
+        // TODO - this could be run once per list traversal
         const sensitive = /[^a-l .@\-]/.test(searchTerm);
         const re = (pattern: string) => new RegExp(pattern, sensitive ? "" : "i");
 
-        const startOfStringMatch = re(`^${searchTerm}`).exec(str);
+        let match;
+        let score = 3;
+        const patterns = [`^${searchTerm}`, `\\b${searchTerm}`, searchTerm];
+        for (let pattern of patterns) {
+            match = re(pattern).exec(str);
+            if (match) {
+                const spans: Span[] = [[match.index, match.index + searchTerm.length]];
+                const marked = this.mark(str, spans);
 
-        if (startOfStringMatch) {
-            const spans: Span[] = [[startOfStringMatch.index, startOfStringMatch.index + searchTerm.length]];
-            const marked = this.mark(str, spans);
-
-            return { score: 3, spans, marked };
+                return { score, spans, marked };
+            } else {
+                score--;
+            }
         }
-        score += re(`\\b${searchTerm}`).test(str) ? this.config.startOfWordBonus : 0;
-        score += re(searchTerm).test(str) ? 1 : 0;
 
         return { score, spans: [], marked: str };
     }
 
     private mark(str: string, spans: Span[]) {
-        return str;
+        const b = this.config.markBefore;
+        const a = this.config.markAfter;
+        let ret = "";
+        let p = 0;
+        const normalized = _.map(spans, (span) => (_.isNumber(span) ? [span, span + 1] : span));
+        _.each(normalized, (span) => {
+            ret += `${str.substring(p, span[0])}${b}${str.substring(span[0], span[1])}${a}`;
+            p = span[1];
+        });
+        ret += str.substring(p);
+
+        return ret;
     }
 }
