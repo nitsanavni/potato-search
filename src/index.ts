@@ -60,11 +60,7 @@ export class Search {
             const spans: Span[] = [[startOfStringMatch.index, startOfStringMatch.index + searchTerm.length]];
             const marked = this.mark(str, spans);
 
-            return {
-                score: 3,
-                spans,
-                marked
-            };
+            return { score: 3, spans, marked };
         }
         score += re(`\\b${searchTerm}`).test(str) ? this.config.startOfWordBonus : 0;
         score += re(searchTerm).test(str) ? 1 : 0;
