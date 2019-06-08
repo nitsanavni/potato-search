@@ -1,2 +1,2 @@
 ./buildw &
-watch -n 0.1  ./tcr
+fswatch built -o -l 0.3 --event Updated | while read num ; do ./tcr ; done
