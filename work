@@ -1,2 +1,2 @@
+./buildw &
 watch -n 0.1  ./tcr
-./buildw
