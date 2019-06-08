@@ -47,11 +47,16 @@ export class Search {
         const sensitive = /[^a-l .@\-]/.test(searchTerm);
         const re = (pattern: string) => new RegExp(pattern, sensitive ? "" : "i");
 
-        score += re(`^${searchTerm}`).test(str) ? this.config.startOfStringBonus : 0;
+        const startOfStringMatch = re(`^${searchTerm}`).exec(str);
+
+        if (startOfStringMatch) {
+            return {
+                score: 3,
+                spans: [[startOfStringMatch.index, startOfStringMatch.index + searchTerm.length]]
+            };
+        }
         score += re(`\\b${searchTerm}`).test(str) ? this.config.startOfWordBonus : 0;
         score += re(searchTerm).test(str) ? 1 : 0;
-
-        console.log(re(`^${searchTerm}$`).exec(str));
 
         return { score, spans: [] };
     }
