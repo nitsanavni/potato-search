@@ -51,7 +51,7 @@ export class Search {
         score += re(`\\b${searchTerm}`).test(str) ? this.config.startOfWordBonus : 0;
         score += re(searchTerm).test(str) ? 1 : 0;
 
-        console.log(re(`^${searchTerm}`).test(str));
+        console.log(re(`^${searchTerm}`).exec(str));
 
         return { score, spans: [] };
     }
