@@ -9,6 +9,7 @@ export interface Config {
     allowWordsOutOfOrder?: number | boolean;
     markBefore?: string;
     markAfter?: string;
+    escape?: boolean;
 }
 
 type Index = number;
@@ -31,6 +32,7 @@ interface ConfigNumbers {
     matchProportionBonus: number;
     markBefore: string;
     markAfter: string;
+    escape: boolean;
 }
 
 const defaultConfig: ConfigNumbers = {
@@ -39,8 +41,13 @@ const defaultConfig: ConfigNumbers = {
     allowErrors: 0,
     matchProportionBonus: 0,
     markBefore: "*",
-    markAfter: "*"
+    markAfter: "*",
+    escape: true
 };
+
+function escapeRegExp(text: string) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 export class Search {
     private readonly config: ConfigNumbers;
@@ -52,8 +59,8 @@ export class Search {
     }
 
     public term(searchTerm: string): Search {
-        this.searchTerm = searchTerm;
         this.sensitive = /[^a-z .@\-]/.test(searchTerm);
+        this.searchTerm = this.config.escape ? escapeRegExp(searchTerm) : searchTerm;
 
         return this;
     }

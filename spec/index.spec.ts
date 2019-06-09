@@ -8,6 +8,10 @@ describe("Search", () => {
     beforeEach(() => (search = new Search()));
 
     // TODO - non-English
+    // TODO - avoid regex injection
+    // TODO - more score if closer to start of string
+    // TODO - more score if covers more of string
+    // TODO - multi-part terms
     // TODO - results in markdown
     _.each(
         [
