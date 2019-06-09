@@ -1,6 +1,6 @@
 {
     "name": "potato-search",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "",
     "main": "built/src/index.js",
     "types": "built/src/index.d.ts",
@@ -17,9 +17,9 @@
     "author": "Nitsan Avni",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/nitsanavni/search/issues"
+        "url": "https://github.com/nitsanavni/potato-search/issues"
     },
-    "homepage": "https://github.com/nitsanavni/search#readme",
+    "homepage": "https://github.com/nitsanavni/potato-search#readme",
     "dependencies": {
         "@types/lodash": "^4.14.134",
         "lodash": "^4.17.11",
