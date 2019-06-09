@@ -77,7 +77,7 @@ export class Search {
             match = re(pattern).exec(str);
 
             if (match) {
-                const spans: Span[] = [[match.index, match.index + term.length]];
+                const spans: Span[] = [[match.index, match.index + match[0].length]];
                 const marked = this.mark(str, spans);
 
                 return { score, spans, marked };
