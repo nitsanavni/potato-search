@@ -10,6 +10,7 @@ export interface Config {
     markBefore?: string;
     markAfter?: string;
     escape?: boolean;
+    deburr?: boolean;
 }
 
 type Index = number;
@@ -33,6 +34,7 @@ interface ConfigNumbers {
     markBefore: string;
     markAfter: string;
     escape: boolean;
+    deburr: boolean;
 }
 
 const defaultConfig: ConfigNumbers = {
@@ -42,7 +44,8 @@ const defaultConfig: ConfigNumbers = {
     matchProportionBonus: 0,
     markBefore: "*",
     markAfter: "*",
-    escape: true
+    escape: true,
+    deburr: true
 };
 
 function escapeRegExp(text: string) {
@@ -70,11 +73,13 @@ export class Search {
         const term = this.searchTerm;
         const re = (pattern: string) => new RegExp(pattern, sensitive ? "" : "i");
 
+        const deburrStr = this.config.deburr ? _.deburr(str) : str;
+
         let match;
         let score = 3;
         const patterns = [`^${term}`, `\\b${term}`, term];
         for (let pattern of patterns) {
-            match = re(pattern).exec(str);
+            match = re(pattern).exec(deburrStr);
 
             if (match) {
                 const spans: Span[] = [[match.index, match.index + match[0].length]];

@@ -8,11 +8,10 @@ describe("Search", () => {
     beforeEach(() => (search = new Search()));
 
     // TODO - non-English
-    // TODO - avoid regex injection
     // TODO - more score if closer to start of string
     // TODO - more score if covers more of string
-    // TODO - multi-part terms
-    // TODO - results in markdown
+    // TODO - multi-part terms & out-of-order-multi-part terms
+    // TODO - support accented chars - can use _.deburr
     _.each(
         [
             ["hell", "hello", 3, "*hell*o"],
@@ -20,7 +19,8 @@ describe("Search", () => {
             ["ell", "hello", 1, "h*ell*o"],
             ["help", "hello", 0, "hello"],
             ["Hell", "hello", 0, "hello"],
-            ["hell", "Hello", 3, "*Hell*o"]
+            ["hell", "Hello", 3, "*Hell*o"],
+            ["wereld", "hallo wêreld", 2, "hallo *wêreld*"]
         ],
         ([searchTerm, str, expectedScore, marked]: [string, string, number, string]) =>
             it(`should search(${searchTerm}, ${str}) = ${expectedScore}, ${marked}`, () => {
