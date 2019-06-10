@@ -70,7 +70,7 @@ export class Search {
         this.searchTerm = this.config.escape ? escapeRegExp(searchTerm) : searchTerm;
 
         if (this.config.multipart) {
-            const pattern = `\\b${_.join(_.map(_.split(searchTerm, ""), (c) => `(${c})`), "((?:.*)\\b)?")}`;
+            const pattern = `\\b${_.join(_.map(_.split(searchTerm, ""), (c) => `(${c})`), "((?:.*?)\\b)?")}`;
             this.multipartRe = new RegExp(pattern, this.sensitive ? "" : "i");
         }
 

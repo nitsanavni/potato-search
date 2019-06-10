@@ -1,6 +1,6 @@
 {
     "name": "potato-search",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "",
     "main": "built/src/index.js",
     "types": "built/src/index.d.ts",
