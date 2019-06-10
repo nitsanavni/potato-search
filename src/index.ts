@@ -11,6 +11,7 @@ export interface Config {
     markAfter?: string;
     escape?: boolean;
     deburr?: boolean;
+    multipart?: boolean;
 }
 
 type Index = number;
@@ -35,6 +36,7 @@ interface ConfigNumbers {
     markAfter: string;
     escape: boolean;
     deburr: boolean;
+    multipart: boolean;
 }
 
 const defaultConfig: ConfigNumbers = {
@@ -45,7 +47,8 @@ const defaultConfig: ConfigNumbers = {
     markBefore: "*",
     markAfter: "*",
     escape: true,
-    deburr: true
+    deburr: true,
+    multipart: true
 };
 
 function escapeRegExp(text: string) {
@@ -56,6 +59,7 @@ export class Search {
     private readonly config: ConfigNumbers;
     private searchTerm: string = "";
     private sensitive: boolean = false;
+    private multipartRe: RegExp | null = null;
 
     public constructor(config?: Config) {
         this.config = _.assign({}, defaultConfig, config);
@@ -64,6 +68,11 @@ export class Search {
     public term(searchTerm: string): Search {
         this.sensitive = /[^a-z .@\-]/.test(searchTerm);
         this.searchTerm = this.config.escape ? escapeRegExp(searchTerm) : searchTerm;
+
+        if (this.config.multipart) {
+            const pattern = `\\b${_.join(_.map(_.split(searchTerm, ""), (c) => `(${c})`), "((?:.*)\\b)?")}`;
+            this.multipartRe = new RegExp(pattern, this.sensitive ? "" : "i");
+        }
 
         return this;
     }
@@ -91,7 +100,48 @@ export class Search {
             }
         }
 
+        if (this.multipartRe) {
+            match = this.multipartRe.exec(deburrStr);
+
+            if (match) {
+                const score = 3;
+                const spans = this.multipartSpans(match);
+                const marked = this.mark(str, spans);
+
+                return { score, spans, marked };
+            }
+        }
+
         return { score, spans: [], marked: str };
+    }
+
+    private multipartSpans(match: RegExpExecArray): Span[] {
+        const spans1: number[] = [];
+
+        for (var g = 1, ix = match.index; g < match.length; ix += match[g] ? match[g].length : 0, g++) {
+            if (g % 2) {
+                spans1.push(ix);
+            }
+        }
+
+        const spans: Span[] = [];
+        let s = spans1[0];
+        let e = s + 1;
+
+        _.reduce(spans1, (p, c) => {
+            if (p == c - 1) {
+                e++;
+            } else {
+                spans.push([s, e]);
+                s = c;
+                e = s + 1;
+            }
+            return c;
+        });
+
+        spans.push([s, e]);
+
+        return spans;
     }
 
     private mark(str: string, spans: Span[]) {

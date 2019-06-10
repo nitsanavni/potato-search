@@ -7,11 +7,22 @@ describe("Search", () => {
 
     beforeEach(() => (search = new Search()));
 
+    it("should multipart term", () => {
+        const searchTerm = "hwo";
+        const pattern = `\\b${_.join(_.map(_.split(searchTerm, ""), (c) => `(${c})`), "(?:(.*)\\b)?")}`;
+
+        const result = new RegExp(pattern).exec("hello world");
+
+        console.log("result", result);
+
+        // expect(spans(result as RegExpExecArray)).toEqual([1]);
+    });
+
+    // TODO - multi-part terms & out-of-order-multi-part terms
     // TODO - non-English
     // TODO - more score if closer to start of string
     // TODO - more score if covers more of string
-    // TODO - multi-part terms & out-of-order-multi-part terms
-    // TODO - support accented chars - can use _.deburr
+    // TODO - more score if exact word
     _.each(
         [
             ["hell", "hello", 3, "*hell*o"],
@@ -20,7 +31,12 @@ describe("Search", () => {
             ["help", "hello", 0, "hello"],
             ["Hell", "hello", 0, "hello"],
             ["hell", "Hello", 3, "*Hell*o"],
-            ["wereld", "hallo wêreld", 2, "hallo *wêreld*"]
+            ["wereld", "hallo wêreld", 2, "hallo *wêreld*"],
+            ["hw", "hello world", 3, "*h*ello *w*orld"],
+            ["hewo", "hello world", 3, "*he*llo *wo*rld"]
+            // ["hw", "HelloWorld", 3, "*H*ello*W*orld"],
+            // ["hewo", "HelloWorld", 3, "*He*llo*Wo*rld"]
+            // ["wohe", "hello world", 2, "*he*llo *wo*rld"]
         ],
         ([searchTerm, str, expectedScore, marked]: [string, string, number, string]) =>
             it(`should search(${searchTerm}, ${str}) = ${expectedScore}, ${marked}`, () => {
