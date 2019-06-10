@@ -33,7 +33,9 @@ describe("Search", () => {
             ["hell", "Hello", 3, "*Hell*o"],
             ["wereld", "hallo wêreld", 2, "hallo *wêreld*"],
             ["hw", "hello world", 3, "*h*ello *w*orld"],
-            ["hewo", "hello world", 3, "*he*llo *wo*rld"]
+            ["hewo", "hello world", 3, "*he*llo *wo*rld"],
+            ["hew", "hello world world", 3, "*he*llo *w*orld world"],
+            ["chmc", "christie.mccaughan@live.com", 3, "*ch*ristie.*mc*caughan@live.com"]
             // ["hw", "HelloWorld", 3, "*H*ello*W*orld"],
             // ["hewo", "HelloWorld", 3, "*He*llo*Wo*rld"]
             // ["wohe", "hello world", 2, "*he*llo *wo*rld"]
