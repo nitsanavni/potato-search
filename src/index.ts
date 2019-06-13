@@ -51,10 +51,10 @@ const defaultConfig: ConfigNumbers = {
     multipart: true
 };
 
-const specialChars = /[-[\]{}()*+?.,\\^$|#\s]/g;
+const specialChars = () => /[-[\]{}()*+?.,\\^$|#\s]/g;
 
 function escapeRegExp(text: string) {
-    return _.clone(text).replace(specialChars, "\\$&");
+    return _.clone(text).replace(specialChars(), "\\$&");
 }
 
 export class Search {
@@ -71,9 +71,11 @@ export class Search {
         this.sensitive = /[^a-z .@\-]/.test(searchTerm);
         this.searchTerm = this.config.escape ? escapeRegExp(searchTerm) : searchTerm;
 
-        if (this.config.multipart && !specialChars.test(searchTerm)) {
+        if (this.config.multipart && !specialChars().test(searchTerm)) {
             const pattern = `\\b${_.join(_.map(_.split(searchTerm, ""), (c) => `(${c})`), "((?:.*?)\\b){0,1}?")}`;
             this.multipartRe = new RegExp(pattern, this.sensitive ? "" : "i");
+        } else {
+            this.multipartRe = null;
         }
 
         return this;

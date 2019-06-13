@@ -5,7 +5,7 @@ import { Search, Span } from "../src";
 describe("Search", () => {
     let search: Search;
 
-    beforeEach(() => (search = new Search()));
+    beforeAll(() => (search = new Search()));
 
     // TODO - PascalCase detection (can't use \b, however can convert using smthg like _.lowerCase, but need to compute the right indices)
     // TODO - allow certain search term "errors", don't assume user knows the string exactly
