@@ -54,7 +54,7 @@ const defaultConfig: ConfigNumbers = {
 const specialChars = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
 function escapeRegExp(text: string) {
-    return text.replace(specialChars, "\\$&");
+    return _.clone(text).replace(specialChars, "\\$&");
 }
 
 export class Search {

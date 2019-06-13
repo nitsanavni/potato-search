@@ -1,9 +1,12 @@
 {
     "name": "potato-search",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "description": "",
     "main": "built/src/index.js",
     "types": "built/src/index.d.ts",
+    "files": [
+        "built/src/*"
+    ],
     "scripts": {
         "test": "jasmine"
     },
