@@ -7,19 +7,10 @@ describe("Search", () => {
 
     beforeEach(() => (search = new Search()));
 
-    it("should multipart term", () => {
-        const searchTerm = "hwo";
-        const pattern = `\\b${_.join(_.map(_.split(searchTerm, ""), (c) => `(${c})`), "(?:(.*)\\b)?")}`;
-
-        const result = new RegExp(pattern).exec("hello world");
-
-        console.log("result", result);
-
-        // expect(spans(result as RegExpExecArray)).toEqual([1]);
-    });
-
-    // TODO - multi-part terms & out-of-order-multi-part terms
+    // TODO - PascalCase detection (can't use \b, however can convert using smthg like _.lowerCase, but need to compute the right indices)
+    // TODO - allow certain search term "errors", don't assume user knows the string exactly
     // TODO - non-English
+    // TODO - out-of-order-multi-part terms
     // TODO - more score if closer to start of string
     // TODO - more score if covers more of string
     // TODO - more score if exact word
@@ -35,7 +26,9 @@ describe("Search", () => {
             ["hw", "hello world", 3, "*h*ello *w*orld"],
             ["hewo", "hello world", 3, "*he*llo *wo*rld"],
             ["hew", "hello world world", 3, "*he*llo *w*orld world"],
-            ["chmc", "christie.mccaughan@live.com", 3, "*ch*ristie.*mc*caughan@live.com"]
+            ["chmc", "christie.mccaughan@live.com", 3, "*ch*ristie.*mc*caughan@live.com"],
+            ["h.", "hello.world", 0, "hello.world"],
+            [".", "hello world", 0, "hello world"]
             // ["hw", "HelloWorld", 3, "*H*ello*W*orld"],
             // ["hewo", "HelloWorld", 3, "*He*llo*Wo*rld"]
             // ["wohe", "hello world", 2, "*he*llo *wo*rld"]
